@@ -1,2 +1,4 @@
 docker-compose.yml
 k8s_deployment.yaml
+jenkins-cli.jar
+credentials.xml
