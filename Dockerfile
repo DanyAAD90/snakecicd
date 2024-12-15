@@ -2,11 +2,11 @@
 FROM nginx:alpine
 
 # Skopiuj plik index.html do katalogu, w którym nginx będzie go serwować
-COPY ./index.html /usr/share/nginx/html/index.nginx-debian.html
+COPY index.html /usr/share/nginx/html/index.html
 
-# Zmiana domyślnego portu na 8016
-EXPOSE 8016
+# Zmiana domyślnego portu na 80
+EXPOSE 80
 
 # Uruchom serwer nginx, który będzie nasłuchiwał na porcie 8016
-CMD ["nginx", "-g", "daemon off;", "-c", "/etc/nginx/nginx.conf"]
+CMD ["nginx", "-g", "daemon off;"]
 

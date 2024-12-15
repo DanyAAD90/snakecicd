@@ -2,3 +2,4 @@ docker-compose.yml
 k8s_deployment.yaml
 jenkins-cli.jar
 credentials.xml
+auto_commit.sh
