@@ -3,3 +3,4 @@
 docker-compose.yml
 kubeconfig/
 .dockerignore
+k8s-deployment.yaml

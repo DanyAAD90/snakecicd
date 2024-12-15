@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snakecicd
+  labels:
+    app: snakecicd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: snakecicd
+  template:
+    metadata:
+      labels:
+        app: snakecicd
+    spec:
+      containers:
+      - name: snakecicd
+        image: danielzdun/snakecicd:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: snakecicd-service
+  labels:
+    app: snakecicd
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 8002
+  selector:
+    app: snakecicd
