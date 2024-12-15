@@ -1,4 +1,5 @@
 .git
+.gitignore
 docker-compose.yml
 kubeconfig/
 .dockerignore
