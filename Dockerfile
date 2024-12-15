@@ -10,3 +10,4 @@ EXPOSE 80
 # Uruchom serwer nginx, który będzie nasłuchiwał na porcie 8016
 CMD ["nginx", "-g", "daemon off;"]
 
+#test automatycznego pushowania
