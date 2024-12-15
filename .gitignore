@@ -1,2 +1,2 @@
-docker-compose.yml
-k8s-deployment.yaml
+./docker-compose.yml
+./k8s_deployment.yaml

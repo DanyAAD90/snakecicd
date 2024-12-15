@@ -1,0 +1,46 @@
+version: '3.8'
+
+# Step 1: Define Docker Compose services
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8003:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - devops-pipeline
+
+  docker-builder:
+    image: docker:24.0-dind
+    container_name: docker-builder
+    privileged: true
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+      - docker-certs:/certs
+      - docker-data:/var/lib/docker
+    networks:
+      - devops-pipeline
+
+  kubectl:
+    image: bitnami/kubectl:latest
+    container_name: kubectl
+    environment:
+      - KUBECONFIG=/root/.kube/config
+    volumes:
+      - ./kubeconfig:/root/.kube/config
+    networks:
+      - devops-pipeline
+
+volumes:
+  jenkins_home:
+  docker-certs:
+  docker-data:
+
+networks:
+  devops-pipeline:
+    driver: bridge
+
