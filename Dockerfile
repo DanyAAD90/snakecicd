@@ -11,3 +11,4 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 #test automatycznego pushowania
+#czy systemd na auto_commit.sh dziala?
