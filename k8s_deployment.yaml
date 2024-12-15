@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: snakecicd
-        image: danielzdun/snakecicd:1.6
+        image: danielzdun/snakecicd:1.${versionapp}
         ports:
         - containerPort: 80
 ---
