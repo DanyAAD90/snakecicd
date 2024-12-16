@@ -1,4 +1,4 @@
-# Zalozenia projektu gry snake w przegladarce:
+# Zalozenia projektu gry snake uwzgledniajac CICD:
 - Repozytorium w folderze snake/ z plikami oraz docker-compose to utworzenia jenkins w kontenerze oraz index.html z gra snake
 - kazda zmiana w kodzie index.html lub w ogole folderze powoduje automatyczne pushowanie do github na podstawie dodanego serwisu auto_commit.service w systemd
 - Otwieramy jenkins w przegladarce pod adresem 192.168.18.165:8003 i uruchamiamy pipeline o nazwie "snake_test_auto_image"
