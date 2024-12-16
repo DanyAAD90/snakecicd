@@ -10,6 +10,6 @@
   - uruchamia aplikacje snake na stagingu pod adresem 192.168.18.165:8215
   - zapisuje logi
 ## Realizacja calkowitej automatyzacji Continous Delivery na kubernetes:
-  - uruchomienie monitor_repo.sh w snakecicd_monitor/ sprawdza czy nastapila zmiana w kodzie gry (index.html) w lokalnym repozytorium, jeśli tak to wykonaj pipeline
+  - uruchomienie monitor_repo.sh w snakecicd_monitor/ sprawdza czy nastapila zmiana w kodzie gry (index.html) w lokalnym repozytorium, jeśli tak to wykonaj pipeline za pomoca Jenkins CLI
   - uruchomienie monitor.sh w snakecicd_monitor/ sprawdza zmianę wersji dostarczoną przez jenkins w pliku latest_version, która pojawi się po wykonaniu pipeline
   - aplikacja jest gotowa na produkcji w srodowisku kubernetes z deploymentem, servisem oraz dwoma replikami podów pod adresem http://192.168.18.165:8321 (Continous Delivery)
