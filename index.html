@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- skladanie klockow do pelnego automatu, teraz monitoring -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -47,6 +46,7 @@
             snake.draw();
             food.draw();
             displayScore();
+            displayVersion(); // Dodajemy wyświetlanie wersji gry
 
             if (snake.eat(food)) {
                 food.randomize();
@@ -151,10 +151,17 @@
             ctx.fillText(`Score: ${score}`, 10, 20);
         }
 
+        function displayVersion() {
+            ctx.fillStyle = "white";
+            ctx.font = "15px Arial";
+            ctx.fillText("Obecna wersja gry to 1.35", 10, 40); // Napis po lewej stronie
+        }
+
         window.addEventListener("keydown", function(event) {
             snake.changeDirection(event);
         });
     </script>
 </body>
 </html>
+
 
