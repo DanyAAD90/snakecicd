@@ -10,10 +10,18 @@
             display: block;
             margin: 0 auto;
         }
+        #version {
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas" width="700" height="500"></canvas>
+    <div id="version">Obecna wersja gry to 1.35</div> <!-- Napis pod grą -->
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
@@ -42,7 +50,6 @@
 
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            displayVersion(); // Dodajemy wyświetlanie wersji gry przed innymi elementami
             snake.update();
             snake.draw();
             food.draw();
@@ -149,12 +156,6 @@
             ctx.fillStyle = "white";
             ctx.font = "20px Arial";
             ctx.fillText(`Score: ${score}`, 10, 20);
-        }
-
-        function displayVersion() {
-            ctx.fillStyle = "white";
-            ctx.font = "15px Arial";
-            ctx.fillText("Obecna wersja gry to 1.35", 10, 40); // Napis po lewej stronie
         }
 
         window.addEventListener("keydown", function(event) {
