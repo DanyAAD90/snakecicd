@@ -36,9 +36,8 @@
         let speed = 10;
         let interval;
 
-        // Wczytaj obraz chomika
         const hamsterImage = new Image();
-        hamsterImage.src = "hamster.png"; // Podmień na odpowiednią ścieżkę do obrazka
+        hamsterImage.src = "hamster.png"; // Podmień na poprawną ścieżkę do obrazu
 
         (function setup() {
             snake = new Snake();
@@ -102,13 +101,18 @@
                     let part = this.snakeArray[i];
                     if (i === this.snakeArray.length - 1) {
                         // Głowa węża - rysuj obrazek
-                        ctx.drawImage(
-                            hamsterImage,
-                            part.x * scale,
-                            part.y * scale,
-                            scale,
-                            scale
-                        );
+                        if (hamsterImage.complete) {
+                            ctx.drawImage(
+                                hamsterImage,
+                                part.x * scale,
+                                part.y * scale,
+                                scale,
+                                scale
+                            );
+                        } else {
+                            ctx.fillStyle = "green";
+                            ctx.fillRect(part.x * scale, part.y * scale, scale, scale);
+                        }
                     } else {
                         // Reszta ciała węża
                         ctx.fillStyle = "white";
@@ -163,10 +167,10 @@
             };
 
             this.draw = function() {
-                // Rysowanie emotki 🌾 w miejscu jedzenia
-                ctx.font = `${scale}px Arial`;
+                ctx.font = `${scale - 2}px Arial`;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
+                ctx.fillStyle = "white";
                 ctx.fillText("🌾", this.x * scale + scale / 2, this.y * scale + scale / 2);
             };
         }
