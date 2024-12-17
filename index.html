@@ -21,7 +21,7 @@
 </head>
 <body>
     <canvas id="gameCanvas" width="700" height="500"></canvas>
-    <div id="version">Obecna wersja gry to 1.35</div>
+    <div id="version">Obecna wersja gry to 1.35</div> <!-- Napis pod grą -->
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
@@ -33,16 +33,13 @@
         let snake;
         let food;
         let score = 0;
-        let speed = 10;
+        let speed = 10; // Początkowa prędkość (im mniejsza liczba, tym szybsza gra)
         let interval;
-
-        const hamsterImage = new Image();
-        hamsterImage.src = "hamster.png"; // Podmień na poprawną ścieżkę do obrazu
 
         (function setup() {
             snake = new Snake();
             food = new Food();
-            food.randomize();
+            food.randomize(); // Ustaw jedzenie na losowej pozycji
             startGameLoop();
         })();
 
@@ -60,19 +57,19 @@
 
             if (snake.eat(food)) {
                 food.randomize();
-                score += 10;
-                if (score % 50 === 0) {
+                score += 10; // Dodaj 10 punktów
+                if (score % 50 === 0) { // Co 50 punktów zwiększ prędkość
                     speed++;
-                    startGameLoop();
+                    startGameLoop(); // Restartuj pętlę gry z nową prędkością
                 }
             }
 
             if (snake.checkCollision()) {
-                alert(`Game Over! Your score: ${score}`);
+                alert(Game Over! Your score: ${score});
                 snake.reset();
-                score = 0;
-                speed = 10;
-                startGameLoop();
+                score = 0; // Zresetuj wynik
+                speed = 10; // Zresetuj prędkość
+                startGameLoop(); // Restartuj pętlę gry
             }
         }
 
@@ -99,25 +96,8 @@
             this.draw = function() {
                 for (let i = 0; i < this.snakeArray.length; i++) {
                     let part = this.snakeArray[i];
-                    if (i === this.snakeArray.length - 1) {
-                        // Głowa węża - rysuj obrazek
-                        if (hamsterImage.complete) {
-                            ctx.drawImage(
-                                hamsterImage,
-                                part.x * scale,
-                                part.y * scale,
-                                scale,
-                                scale
-                            );
-                        } else {
-                            ctx.fillStyle = "green";
-                            ctx.fillRect(part.x * scale, part.y * scale, scale, scale);
-                        }
-                    } else {
-                        // Reszta ciała węża
-                        ctx.fillStyle = "white";
-                        ctx.fillRect(part.x * scale, part.y * scale, scale, scale);
-                    }
+                    ctx.fillStyle = (i === this.snakeArray.length - 1) ? "green" : "white";
+                    ctx.fillRect(part.x * scale, part.y * scale, scale, scale);
                 }
             };
 
@@ -167,18 +147,15 @@
             };
 
             this.draw = function() {
-                ctx.font = `${scale - 2}px Arial`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillStyle = "white";
-                ctx.fillText("🌾", this.x * scale + scale / 2, this.y * scale + scale / 2);
+                ctx.fillStyle = "red";
+                ctx.fillRect(this.x * scale, this.y * scale, scale, scale);
             };
         }
 
         function displayScore() {
             ctx.fillStyle = "white";
             ctx.font = "20px Arial";
-            ctx.fillText(`Score: ${score}`, 10, 20);
+            ctx.fillText(Score: ${score}, 10, 20);
         }
 
         window.addEventListener("keydown", function(event) {
