@@ -1,4 +1,4 @@
-# Zalozenia projektu gry snake uwzgledniajac CICD:
+# Zalozenia projektu gry snake w oparciu o CICD:
 - Repozytorium w folderze snake/ z plikami oraz docker-compose to utworzenia jenkins w kontenerze oraz index.html z gra snake
 - kazda zmiana w kodzie index.html lub w jakakolwiek w repozytorium lokalnym powoduje automatyczne pushowanie do github na podstawie dodanego serwisu auto_commit.service w systemd
 ## Continous Integration + Continous Delivery na dockerhub pipeline:
