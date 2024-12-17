@@ -65,7 +65,7 @@
             }
 
             if (snake.checkCollision()) {
-                alert(Game Over! Your score: ${score});
+                alert(`Game Over! Your score: ${score}`);
                 snake.reset();
                 score = 0; // Zresetuj wynik
                 speed = 10; // Zresetuj prędkość
@@ -155,7 +155,7 @@
         function displayScore() {
             ctx.fillStyle = "white";
             ctx.font = "20px Arial";
-            ctx.fillText(Score: ${score}, 10, 20);
+            ctx.fillText(`Score: ${score}`, 10, 20);
         }
 
         window.addEventListener("keydown", function(event) {
