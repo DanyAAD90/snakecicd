@@ -49,6 +49,8 @@
         let messageTimer;
         let interval;
         let highScore = localStorage.getItem('snakeHighScore') || 0;
+        let showNewHighScore = false;
+        let newHighScoreTimer;
 
         (function setup() {
             snake = new Snake();
@@ -89,6 +91,16 @@
             }
 
             if (snake.checkCollision()) {
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem('snakeHighScore', highScore);
+
+                    showNewHighScore = true;
+                    clearTimeout(newHighScoreTimer);
+                    newHighScoreTimer = setTimeout(() => {
+                        showNewHighScore = false;
+                        }, 3000); // pokazujemy napis przez 3 sekundy
+                }
                 alert(`Game Over! Your score: ${score}`);
                 snake.reset();
                 score = 0; // Zresetuj wynik
@@ -101,6 +113,15 @@
                 ctx.font = "bold 50px Arial";
                 ctx.textAlign = "center";
                 ctx.fillText("Outstanding!", canvas.width / 2, canvas.height / 2);
+                ctx.restore();
+            }
+
+            if (showNewHighScore) {
+                ctx.save();
+                ctx.fillStyle = "gold";
+                ctx.font = "bold 40px Arial";
+                ctx.textAlign = "center";
+                ctx.fillText("NEW HIGH SCORE! 🏆", canvas.width / 2, canvas.height / 2 - 50);
                 ctx.restore();
             }
             displayScore();
