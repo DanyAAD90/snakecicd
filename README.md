@@ -13,7 +13,7 @@
   - monitor_repo.service uruchamia monitor_repo.sh w snakecicd_monitor/ i sprawdza czy nastapila zmiana w kodzie gry (index.html) w lokalnym repozytorium, jeśli tak to wykonaj pipeline za pomoca Jenkins CLI
   - monitor.service uruchamia monitor.sh w snakecicd_monitor/ i sprawdza zmianę wersji dostarczoną przez jenkins w pliku latest_version na maszynie lokalnej, która pojawi się po wykonaniu pipeline. Jeśli tak, to aktualizuje wartość w pliku values.yaml na podstawie której automatycznie aktualizowany jest obraz image w deploymencie snakecicd-prod na kubernetes
   - aplikacja jest up-to-date na produkcji w srodowisku kubernetes z deploymentem, servisem oraz dwoma replikami podów pod adresem http://192.168.18.165:8321 (Continous Delivery)
-  ## Workflow procesu aktualizacji github, dockerhub and deployment kubernetes:
+  ## Workflow procesu aktualizacji github, dockerhub and deployment kubernetes po zmianie kodu gry Snake:
 
 ```mermaid
 flowchart TD
