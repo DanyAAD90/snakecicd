@@ -18,6 +18,10 @@
 ```mermaid
 flowchart TD
 A1[Snake game] <--> A[Local .git]
+A --> A2[master node]
+A5[grafana, prometheus] <--> A2
+A5 <--> A3[worker node1]
+A5 <--> A4[worker node1]
 E <--> B[auto_commit.service]
 E <--> C[monitor_repo.service]
 E <--> D[monitor.service]
@@ -36,6 +40,7 @@ subgraph K8s
 D --> N[Take current version from latest_version file and save it to values.yaml file]
 N --> O[Helm auto upgrade snakecicd-prod namespace in kubernetes, update current docker image with version 1.53 from dockerhub in deployment and pods]
 O --> P[kubectl auto patch svc]
+P <--> S[ArgoCD auto sync]
 end
 M --> R[Snake game up-to-date]
 F --> H
