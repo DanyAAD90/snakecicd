@@ -210,9 +210,12 @@
         }
 
         function displayScore() {
+            ctx.save(); // ZAPAMIĘTAJ aktualny kontekst
             ctx.fillStyle = "white";
             ctx.font = "20px Arial";
-            ctx.fillText(`Score: ${score}`, 10, 20);
+            ctx.textAlign = "left"; // jawnie ustaw left
+            ctx.fillText(`Score: ${score}`, 10, 30);
+            ctx.restore(); // PRZYWRÓĆ kontekst po rysowaniu
         }
 
         window.addEventListener("keydown", function(event) {
