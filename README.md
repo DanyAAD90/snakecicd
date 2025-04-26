@@ -21,7 +21,7 @@ A1[Snake game] <--> A[Local .git]
 A --> A2[master node]
 A5[grafana, prometheus] <--> A2
 A5 <--> A3[worker node1]
-A5 <--> A4[worker node1]
+A5 <--> A4[worker node2]
 E <--> B[auto_commit.service]
 E <--> C[monitor_repo.service]
 E <--> D[monitor.service]
