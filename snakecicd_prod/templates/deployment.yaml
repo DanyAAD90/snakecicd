@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snakecicd-prod
+  namespace: snakecicd-prod
+  labels:
+    app: snakecicd-prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: snakecicd-prod
+  template:
+    metadata:
+      labels:
+        app: snakecicd-prod
+    spec:
+      containers:
+      - name: snakecicd-prod
+        image: danielzdun/snakecicd:1.{{ .Values.versionapp }}
+        ports:
+        - containerPort: 80
