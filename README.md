@@ -34,7 +34,7 @@ L --> M[Docker push image to dockerhub with version 1.53]
 end
 subgraph K8s
 D --> N[Take current version from latest_version file and save it to values.yaml file]
-N --> O[Helm auto upgrade snakecicd-prod namespace in kubernetes, download current docker image with version 1.53 from dockerhub, put it into deployment and pods]
+N --> O[Helm auto upgrade snakecicd-prod namespace in kubernetes, update current docker image with version 1.53 from dockerhub in deployment and pods]
 O --> P[kubectl auto patch svc]
 end
 M --> R[Snake game up-to-date]
