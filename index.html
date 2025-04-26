@@ -19,43 +19,14 @@
             margin-top: 10px;
         }
         #greeting {
-            color: #00ffff; /* jaśniejszy turkus */
+            color: #00ffff;
             text-align: center;
             font-family: 'Arial Black', sans-serif;
-            font-size: 50px; /* większa czcionka */
+            font-size: 50px;
             margin-top: 20px;
-            opacity: 0;
-            animation: fadeIn 2s forwards, pulse 1.5s infinite alternate;
-            text-shadow:
-                0 0 5px #00ffff,
-                0 0 10px #00ffff,
-                0 0 20px #00ffff,
-                0 0 40px #00ffff;
-        }      
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+            opacity: 1;
+            text-shadow: 0 0 2px #00ffff; /* delikatny, prawie niewidoczny glow */
         }
-
-        @keyframes pulse {
-            0% {
-                text-shadow:
-                    0 0 5px #00ffff,
-                    0 0 10px #00ffff,
-                    0 0 20px #00ffff,
-                    0 0 40px #00ffff;
-            }
-            100% {
-                text-shadow:
-                    0 0 10px #00ffff,
-                    0 0 20px #00ffff,
-                    0 0 30px #00ffff,
-                    0 0 50px #00ffff;
-            }
-        }
-
     </style>
 </head>
 <body>
@@ -101,6 +72,7 @@
                 if (score % 50 === 0) { // Co 50 punktów zwiększ prędkość
                     speed++;
                     startGameLoop(); // Restartuj pętlę gry z nową prędkością
+                    this.colorStage = Math.min(this.colorStage + 1, this.colors.length - 1); // zmień kolor co 5 kulek
                 }
             }
 
@@ -117,6 +89,8 @@
             this.snakeArray = [{x: 10, y: 10}];
             this.direction = "right";
             this.length = 1;
+            this.colorStage = 0; // 0 na start
+            this.colors = ["white", "blue", "cyan", "magenta", "purple", "violet"]; // kolory tęczy
 
             this.update = function() {
                 let head = this.snakeArray[this.snakeArray.length - 1];
@@ -136,7 +110,7 @@
             this.draw = function() {
                 for (let i = 0; i < this.snakeArray.length; i++) {
                     let part = this.snakeArray[i];
-                    ctx.fillStyle = (i === this.snakeArray.length - 1) ? "green" : "white";
+                    ctx.fillStyle = (i === this.snakeArray.length - 1) ? "green" : this.colors[this.colorStage];
                     ctx.fillRect(part.x * scale, part.y * scale, scale, scale);
                 }
             };
