@@ -45,6 +45,8 @@
         let food;
         let score = 0;
         let speed = 10; // Początkowa prędkość (im mniejsza liczba, tym szybsza gra)
+        let showMessage = false;
+        let messageTimer;
         let interval;
 
         (function setup() {
@@ -69,6 +71,16 @@
             if (snake.eat(food)) {
                 food.randomize();
                 score += 10; // Dodaj 10 punktów
+
+                if (score === 100) {
+                    showMessage = true;
+                    clearTimeout(messageTimer);
+                    messageTimer = setTimeout(() => {
+                        showMessage = false;
+                    }, 3000); // po 3 sekundach znika
+                }
+
+
                 if (score % 50 === 0) { // Co 50 punktów zwiększ prędkość
                     speed++;
                     startGameLoop(); // Restartuj pętlę gry z nową prędkością
@@ -83,6 +95,14 @@
                 speed = 10; // Zresetuj prędkość
                 startGameLoop(); // Restartuj pętlę gry
             }
+
+            if (showMessage) {
+                ctx.fillStyle = "#00ffff"; // jasny kolor napisu
+                ctx.font = "bold 50px Arial";
+                ctx.textAlign = "center";
+                ctx.fillText("Outstanding!", canvas.width / 2, canvas.height / 2);
+            }
+
         }
 
         function Snake() {
@@ -90,7 +110,28 @@
             this.direction = "right";
             this.length = 1;
             this.colorStage = 0; // 0 na start
-            this.colors = ["white", "blue", "cyan", "magenta", "purple", "violet"]; // kolory tęczy
+            this.colors = [
+                "white",
+                "blue",
+                "cyan",
+                "magenta",
+                "purple",
+                "violet",
+                "red",
+                "orange",
+                "yellow",
+                "green",
+                "lime",
+                "teal",
+                "indigo",
+                "pink",
+                "gold",
+                "silver",
+                "lightblue",
+                "lightgreen",
+                "orchid",
+                "plum"
+            ];
 
             this.update = function() {
                 let head = this.snakeArray[this.snakeArray.length - 1];
