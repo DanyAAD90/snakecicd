@@ -48,6 +48,7 @@
         let showMessage = false;
         let messageTimer;
         let interval;
+        let highScore = localStorage.getItem('snakeHighScore') || 0;
 
         (function setup() {
             snake = new Snake();
@@ -71,7 +72,7 @@
                 food.randomize();
                 score += 10; // Dodaj 10 punktów
 
-                if (score === 100) {
+                if (score === 660) {
                     showMessage = true;
                     clearTimeout(messageTimer);
                     messageTimer = setTimeout(() => {
@@ -214,7 +215,7 @@
             ctx.fillStyle = "white";
             ctx.font = "20px Arial";
             ctx.textAlign = "left"; // jawnie ustaw left
-            ctx.fillText(`Score: ${score}`, 10, 30);
+            ctx.fillText(`Score: ${score}   Best: ${highScore}`, 10, 30);
             ctx.restore(); // PRZYWRÓĆ kontekst po rysowaniu
         }
 
