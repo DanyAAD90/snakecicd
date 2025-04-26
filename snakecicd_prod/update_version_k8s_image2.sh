@@ -4,9 +4,9 @@ liczba=$(cat /home/tms_master_1/snakecicd_monitor/latest_version)
 sed -i "s/SNAKE_VERSION/$liczba/" /home/tms_master_1/snake/snakecicd_prod/values.yaml
 
 #kubectl delete svc snakecicd-service --namespace snakecicd-prod
-sed -i -E "s/(versionapp: )[0-9]+/\1$liczba/" /home/tms_master_1/snakecicd_prod/values.yaml
+sed -i -E "s/(versionapp: )[0-9]+/\1$liczba/" /home/tms_master_1/snake/snakecicd_prod/values.yaml
 
-helm upgrade snakecicd-prod /home/tms_master_1/snakecicd_prod/ -f /home/tms_master_1/snakecicd_prod/values.yaml --namespace snakecicd-prod
+helm upgrade snakecicd-prod /home/tms_master_1/snake/snakecicd_prod/ -f /home/tms_master_1/snake/snakecicd_prod/values.yaml --namespace snakecicd-prod
 kubectl patch svc snakecicd-service -n snakecicd-prod -p '{"spec":{"externalIPs":["192.168.18.165"]}}'
 echo "Obecna wersja image na deploy kubernetes po zmianie:"
 echo "----------------------------------------------------"
