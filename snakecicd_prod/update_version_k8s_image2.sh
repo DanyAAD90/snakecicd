@@ -1,7 +1,7 @@
 #!/bin/bash
 
 liczba=$(cat /home/tms_master_1/snakecicd_monitor/latest_version)
-sed -i "s/SNAKE_VERSION/$liczba/" /home/tms_master_1/snakecicd_prod/values.yaml
+sed -i "s/SNAKE_VERSION/$liczba/" /home/tms_master_1/snake/snakecicd_prod/values.yaml
 
 #kubectl delete svc snakecicd-service --namespace snakecicd-prod
 sed -i -E "s/(versionapp: )[0-9]+/\1$liczba/" /home/tms_master_1/snakecicd_prod/values.yaml
