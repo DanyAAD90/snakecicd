@@ -3,6 +3,4 @@ k8s_deployment.yaml
 jenkins-cli.jar
 credentials.xml
 auto_commit.sh
-values.yaml
 update_version_k8s_image.sh
-Chart.yaml
