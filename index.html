@@ -108,9 +108,11 @@
             };
 
             this.draw = function() {
+                let colorIndex = Math.min(Math.floor(score / 50), this.colors.length - 1);
+
                 for (let i = 0; i < this.snakeArray.length; i++) {
                     let part = this.snakeArray[i];
-                    ctx.fillStyle = (i === this.snakeArray.length - 1) ? "green" : this.colors[this.colorStage];
+                    ctx.fillStyle = (i === this.snakeArray.length - 1) ? "green" : this.colors[colorIndex];
                     ctx.fillRect(part.x * scale, part.y * scale, scale, scale);
                 }
             };
