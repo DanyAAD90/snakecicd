@@ -18,9 +18,33 @@
             font-size: 15px;
             margin-top: 10px;
         }
+        #greeting {
+            color: #00ffcc;
+            text-align: center;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 40px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 2s forwards, pulse 3s infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes pulse {
+            0% {
+                text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc, 0 0 15px #00ffcc;
+            }
+            100% {
+                text-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc, 0 0 40px #00ffcc;
+            }
+    }
     </style>
 </head>
 <body>
+    <h1 id="greeting">CICD Snake!</h1>
     <canvas id="gameCanvas" width="700" height="500"></canvas>
     <div id="version">Obecna wersja gry to 1.35</div> <!-- Napis pod grą -->
     <script>
