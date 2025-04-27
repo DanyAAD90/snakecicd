@@ -1,1 +1,11 @@
 versionapp: 65
+
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 100Mi
+  limits:
+    cpu: 100m
+    memory: 200Mi
