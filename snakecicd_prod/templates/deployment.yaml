@@ -6,7 +6,7 @@ metadata:
   labels:
     app: snakecicd-prod
 spec:
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: snakecicd-prod
@@ -16,7 +16,33 @@ spec:
         app: snakecicd-prod
     spec:
       containers:
-      - name: snakecicd-prod
-        image: danielzdun/snakecicd:1.{{ .Values.versionapp }}
-        ports:
-        - containerPort: 80
+        - name: snakecicd-prod
+          image: danielzdun/snakecicd:1.{{ .Values.versionapp }}
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 5
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+
