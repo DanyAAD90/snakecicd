@@ -45,4 +45,11 @@ spec:
             limits:
               cpu: {{ .Values.resources.limits.cpu }}
               memory: {{ .Values.resources.limits.memory }}
+          volumeMounts:
+            - name: snake-storage
+              mountPath: /data
+      volumes:
+        - name: snake-storage
+          persistentVolumeClaim:
+            claimName: snakecicd-storage
 
