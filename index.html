@@ -82,6 +82,12 @@
                     }, 3000); // po 3 sekundach znika
                 }
 
+                if (score >= 660) {
+                    food.flash = true;
+                    setTimeout(() => {
+                        food.flash = false;
+                    }, 200); // 200ms flash
+                }
 
                 if (score % 50 === 0) { // Co 50 punktów zwiększ prędkość
                     speed++;
@@ -219,15 +225,24 @@
         function Food() {
             this.x;
             this.y;
+            this.flash = false;
 
             this.randomize = function() {
-                this.x = Math.floor(Math.random() * (columns - 2)) + 1;
-                this.y = Math.floor(Math.random() * (rows - 2)) + 1;
+                if (score >= 660) {
+                    this.x = Math.floor(Math.random() * (columns - 3)) + 1;
+                    this.y = Math.floor(Math.random() * (rows - 3)) + 1;
+                } else {
+                    this.x = Math.floor(Math.random() * (columns - 2)) + 1;
+                    this.y = Math.floor(Math.random() * (rows - 2)) + 1;
             };
 
             this.draw = function() {
-                ctx.fillStyle = "red";
-                ctx.fillRect(this.x * scale, this.y * scale, scale, scale);
+                if (score >= 660) {
+                    ctx.fillStyle = this.flash ? "white" : "#FFD700"; // błysk na biało
+                    ctx.fillRect(this.x * scale, this.y * scale, scale * 2, scale * 2);
+                } else {
+                    ctx.fillStyle = "red";
+                    ctx.fillRect(this.x * scale, this.y * scale, scale, scale);
             };
         }
 
