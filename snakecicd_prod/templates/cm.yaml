@@ -5,6 +5,4 @@ metadata:
   namespace: snakecicd-prod
 data:
   high_scores: |
-    Jarek zdobył 200 punktów
-    Ania zdobyła 150 punktów
-    Tomek zdobył 180 punktów
+    Daniel zdobyl 1010 punktow
