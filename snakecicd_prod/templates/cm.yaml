@@ -4,5 +4,4 @@ metadata:
   name: high-scores-cm
   namespace: snakecicd-prod
 data:
-  high_scores: |
-    Daniel zdobyl 1010 punktow
+  high_scores: {{ .Values.highscore.scores | quote }} 
