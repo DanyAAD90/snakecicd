@@ -68,7 +68,7 @@ Dzialanie poszczególnych komponentów:
 | Główny kontener | snakecicd-prod | Uruchamia grę Snake, dostęp przez serwis TCP:8321 |
 | Sidecar | highscore-sync | Co 10 sekund kopiuje zawartość /config/high_scores.txt do /data/high_scores.txt, aktualizując plik na PV |
 | ConfigMap | high-scores-cm | Zawiera wyniki graczy w formie pliku tekstowego |
-| PVC | snakecicd-storage | Zapewnia trwałe przechowywanie danych gry (np. wyników high_scores) |
+| PVC | snakecicd-storage | Zapewnia trwałe przechowywanie danych gry (wyników high_scores) |
 | Helm Chart | - | Definiuje wszystkie zasoby Kubernetes, automatycznie zarządza rolloutem przy zmianach w ConfigMap |
 
 ## Workflow zmiany pliku values.yaml z rekordami graczy ##
