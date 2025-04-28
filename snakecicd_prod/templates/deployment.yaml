@@ -6,7 +6,7 @@ metadata:
   labels:
     app: snakecicd-prod
 spec:
-  revisionHistoryLimit: 2 #zostawiaj tylko dwa rs
+  revisionHistoryLimit: 2
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -16,6 +16,17 @@ spec:
       labels:
         app: snakecicd-prod
     spec:
+      initContainers:
+        - name: init-copy-highscores
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args:
+            - cp /config/high_scores.txt /data/high_scores.txt;
+          volumeMounts:
+            - name: snake-storage
+              mountPath: /data
+            - name: high-scores-cm-volume
+              mountPath: /config
       containers:
         - name: snakecicd-prod
           image: danielzdun/snakecicd:1.{{ .Values.versionapp }}
@@ -49,8 +60,25 @@ spec:
           volumeMounts:
             - name: snake-storage
               mountPath: /data
+        - name: highscore-sync
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              while true; do
+                cp /config/high_scores.txt /data/high_scores.txt;
+                sleep 10;
+              done
+          volumeMounts:
+            - name: snake-storage
+              mountPath: /data
+            - name: high-scores-cm-volume
+              mountPath: /config
       volumes:
         - name: snake-storage
           persistentVolumeClaim:
             claimName: snakecicd-storage
+        - name: high-scores-cm-volume
+          configMap:
+            name: high-scores-cm
 
