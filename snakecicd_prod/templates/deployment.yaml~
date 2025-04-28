@@ -81,6 +81,4 @@ spec:
         - name: high-scores-cm-volume
           configMap:
             name: high-scores-cm
-            items:
-            - key: high_scores
-              path: high_scores.txt
+
