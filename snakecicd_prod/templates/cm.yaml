@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: high-scores-cm
+  namespace: snakecicd-prod
+data:
+  high_scores: |
+    Jarek zdobył 200 punktów
+    Ania zdobyła 150 punktów
+    Tomek zdobył 180 punktów
