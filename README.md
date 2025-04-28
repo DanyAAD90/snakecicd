@@ -56,7 +56,7 @@ Poszczególne elementy, z których zbudowana jest infrastruktura:
 | Namespace | snakecicd-prod | - |
 | Deployment | snakecicd-prod | zawiera InitContainer, App oraz Sidecar Container, obsługuje uruchomienie aplikacji Snake, kopiowanie plików high_scores.txt oraz ich synchronizację |
 | ConfigMap | high-scores-cm | klucz high_scores z wpisami rekordów gry, Przechowuje treść pliku high_scores.txt jako dane konfiguracyjne |
-| PVC | snakecicd-storage | dynamiczny prosioning za pomoca local-path, trwałe miejsce na zapis danych /data gry snake |
+| PVC | snakecicd-storage | dynamiczny prosioning za pomoca local-path, trwałe miejsce na zapis rekordów /data gry snake |
 | PV | pvc-... | dynamicznie utworzony PV | przypisany do PVC przez local-path StorageClass |
 | NetworkPolicy | snakecicd-network-policy | ochrona komunikacji aplikacji, ogranicza ruch sieciowy dla gry snake w obrębie namespace |
 | HorizontalPodAutoscaler | snakecicd-hpa | dostosowuje ilość podów zależnie od obciążenia cpu na pod, od 2 do 5 |
