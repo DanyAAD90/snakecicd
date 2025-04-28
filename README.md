@@ -75,13 +75,12 @@ Dzialanie poszczególnych komponentów:
 
 ```mermaid
 flowchart TD
-A[Changes Values.yaml with player's highscores] --> B[Change section highscore.scores in vaules.yaml i.e. add or edit score of new player]
-B --> C[Auto Trigger to helm upgrade snakecicd-prod and update ConfigMap]
+B[Changes Values.yaml in section highscore.scores with player's highscores] --> C[Auto Trigger to helm upgrade snakecicd-prod and update ConfigMap]
 C --> D[Helm count new checksum/config and change it in annotation of ConfigMap checksum data on deployment]
 D --> E[K8s notice change in PodTemplate]
-E --> F[Deployment make auto rollout new Pods]
+E --> F[Deployment execute auto rollout of new Pods]
 F --> G[New pods mounting updated ConfigMap, file /config/high_scores.txt including new records data]
-G --> H[Sidecar copy new records data to /data/high_scores.txt, auto change on persistent file]
+G --> H[Sidecar copy new records data to pv on path /data/high_scores.txt, auto change on persistent file]
 H --> I[High Scores are up-to-date and saved on pv attach in pod]
 ```
 
