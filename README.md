@@ -66,7 +66,7 @@ Dzialanie poszczególnych komponentów:
 |-----------|-------|---------|
 | InitContainer | init-copy-highscore | Kopiuje zawartość /config/high_scores.txt (ConfigMap) do /data/high_scores.txt (PVC) przy starcie Poda |
 | Główny kontener | snakecicd-prod | Uruchamia grę Snake, dostęp przez serwis TCP:8321 |
-| Sidecar | highscore-sync | Co 10 sekund kopiuje zawartość /config/high_scores.txt do /data/high_scores.txt, aktualizując plik na PVC |
+| Sidecar | highscore-sync | Co 10 sekund kopiuje zawartość /config/high_scores.txt do /data/high_scores.txt, aktualizując plik na PV |
 | ConfigMap | high-scores-cm | Zawiera wyniki graczy w formie pliku tekstowego |
 | PVC | snakecicd-storage | Zapewnia trwałe przechowywanie danych gry (np. wyników high_scores) |
 | Helm Chart | - | Definiuje wszystkie zasoby Kubernetes, automatycznie zarządza rolloutem przy zmianach w ConfigMap |
