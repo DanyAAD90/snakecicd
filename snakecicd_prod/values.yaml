@@ -9,3 +9,8 @@ resources:
   limits:
     cpu: 100m
     memory: 200Mi
+
+highscore:
+  scores: |
+    Daniel zdobyl 1010 punktów
+
