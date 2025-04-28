@@ -60,7 +60,7 @@ spec:
           volumeMounts:
             - name: snake-storage
               mountPath: /data
-        - name: highscore-sync
+        - name: highscore-sync #sidecar pod
           image: busybox
           command: ["/bin/sh", "-c"]
           args:
