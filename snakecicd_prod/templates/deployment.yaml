@@ -6,6 +6,7 @@ metadata:
   labels:
     app: snakecicd-prod
 spec:
+  revisionHistoryLimit: 2 #zostawiaj tylko dwa rs
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
