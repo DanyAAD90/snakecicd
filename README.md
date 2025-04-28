@@ -47,3 +47,41 @@ F --> H
 P --> R
 K --> D
 ```
+
+## Architektura Klastra K8s dla Snake game ##
+
+Poszczególne elementy, z których zbudowana jest infrastruktura:
+| Typ | Nazwa | Działanie |
+|-----|-------|-----------|
+| Namespace | snakecicd-prod | - |
+| Deployment | snakecicd-prod | zawiera InitContainer, App oraz Sidecar Container, obsługuje uruchomienie aplikacji Snake, kopiowanie plików high_scores.txt oraz ich synchronizację |
+| ConfigMap | high-scores-cm | klucz high_scores z wpisami rekordów gry, Przechowuje treść pliku high_scores.txt jako dane konfiguracyjne |
+| PVC | snakecicd-storage | dynamiczny prosioning za pomoca local-path, trwałe miejsce na zapis danych /data gry snake |
+| PV | pvc-... | dynamicznie utworzony PV | przypisany do PVC przez local-path StorageClass |
+| NetworkPolicy | snakecicd-network-policy | ochrona komunikacji aplikacji, ogranicza ruch sieciowy dla gry snake w obrębie namespace |
+| HorizontalPodAutoscaler | snakecicd-hpa | dostosowuje ilość podów zależnie od obciążenia cpu na pod, od 2 do 5 |
+
+Dzialanie poszczególnych komponentów:
+| Komponent | Nazwa | Funkcja |
+|-----------|-------|---------|
+| InitContainer | init-copy-highscore | Kopiuje zawartość /config/high_scores.txt (ConfigMap) do /data/high_scores.txt (PVC) przy starcie Poda |
+| Główny kontener | snakecicd-prod | Uruchamia grę Snake, dostęp przez serwis TCP:8321 |
+| Sidecar | highscore-sync | Co 10 sekund kopiuje zawartość /config/high_scores.txt do /data/high_scores.txt, aktualizując plik na PVC |
+| ConfigMap | high-scores-cm | Zawiera wyniki graczy w formie pliku tekstowego |
+| PVC | snakecicd-storage | Zapewnia trwałe przechowywanie danych gry (np. wyników high_scores) |
+| Helm Chart | - | Definiuje wszystkie zasoby Kubernetes, automatycznie zarządza rolloutem przy zmianach w ConfigMap |
+
+## Workflow zmiany pliku values.yaml z rekordami graczy ##
+
+```mermaid
+flowchart TD
+A[Changes Values.yaml with player's highscores] --> B[Change section highscore.scores in vaules.yaml i.e. add or edit score of new player]
+B --> C[Auto Trigger to helm upgrade snakecicd-prod and update ConfigMap]
+C --> D[Helm count new checksum/config and change it in annotation of ConfigMap checksum data on deployment]
+D --> E[K8s notice change in PodTemplate]
+E --> F[Deployment make auto rollout new Pods]
+F --> G[New pods mounting updated ConfigMap, file /config/high_scores.txt including new records data]
+G --> H[Sidecar copy new records data to /data/high_scores.txt, auto change on persistent file]
+H --> I[High Scores are up-to-date and saved on pv attach in pod]
+```
+
