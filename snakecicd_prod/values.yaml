@@ -1,6 +1,6 @@
 versionapp: 65
 
-replicaCount: 3
+replicaCount: 2
 
 resources:
   requests:
