@@ -82,5 +82,6 @@ E --> F[Deployment execute auto rollout of new Pods]
 F --> G[New pods mounting updated ConfigMap, file /config/high_scores.txt including new records data]
 G --> H[Sidecar copy new records data to pv on path /data/high_scores.txt, auto change on persistent file]
 H --> I[High Scores are up-to-date and saved on pv attach in pod]
+I --> J[Monitor infrastructure on ArgoCD]
 ```
 
