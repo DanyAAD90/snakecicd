@@ -16,7 +16,7 @@ spec:
       labels:
         app: snakecicd-prod
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") | sha256sum }}
+        checksum/config: {{ toYaml .Values.highscore | sha256sum }}
     spec:
       initContainers:
         - name: init-copy-highscores
