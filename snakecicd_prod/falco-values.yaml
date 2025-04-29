@@ -4,7 +4,7 @@ falco:
 
   httpOutput:
     enabled: true
-    url: "http://falco-falcosidekick:2801"
+    url: "http://falco-falcosidekick.default.svc.cluster.local:280"
 
   grpc:
     enabled: false
@@ -18,7 +18,6 @@ falcosidekick:
     prometheus:
       enabled: true
       endpoint: "0.0.0.0:2802"
-
   service:
     type: ClusterIP
     ports:
