@@ -6,6 +6,8 @@ falco:
     url: "http://falco-falcosidekick.default.svc.cluster.local:2801"
   grpc:
     enabled: false
+  customFields:
+    output: prometheus
 
 falcosidekick:
   enabled: true
@@ -16,8 +18,6 @@ falcosidekick:
     prometheus:
       enabled: true
       endpoint: "0.0.0.0:2802"
-    customfields:
-      output: prometheus
 
   service:
     type: ClusterIP
@@ -33,7 +33,7 @@ falcosidekick:
     - name: PROMETHEUS
       value: "true"
     - name: DEBUG
-      value: "true"  # Dodaj tymczasowo dla lepszych logów
+      value: "true"
 
 rbac:
   create: true
