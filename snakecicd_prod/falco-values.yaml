@@ -1,9 +1,9 @@
 falco:
   jsonOutput: true
-  logLevel: debug
+  logLevel: info
   httpOutput:
-    enabled: false
-#    url: "http://falco-falcosidekick.default.svc.cluster.local:2801"
+    enabled: true
+    url: "http://falco-falcosidekick.default.svc.cluster.local:2801"
   grpc:
     enabled: false
   customFields:
@@ -13,12 +13,15 @@ falcosidekick:
   enabled: true
   fullfqdn: false
   replicaCount: 1
-
+  env:
+    - name: PROMETHEUS
+      value: "true"
+    - name: DEBUG
+      value: "true"
   config:
     prometheus:
       enabled: true
       endpoint: "0.0.0.0:2802"
-
   service:
     type: ClusterIP
     ports:
@@ -28,12 +31,6 @@ falcosidekick:
       - name: http-metrics
         port: 2802
         targetPort: 2802
-
-  env:
-    - name: PROMETHEUS
-      value: "true"
-    - name: DEBUG
-      value: "true"
 
 rbac:
   create: true
