@@ -16,6 +16,9 @@ falcosidekick:
     prometheus:
       enabled: true
       endpoint: "0.0.0.0:2802"
+  env:
+    - name: PROMETHEUS
+      value: "true"
   service:
     metricsPort: 2802
     ports:
