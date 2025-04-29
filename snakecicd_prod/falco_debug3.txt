@@ -393,3 +393,13 @@ Tue Apr 29 23:22:05 2025: libcurl failed to perform call: Couldn't connect to se
                       ├ kernel release: 5.15.0-130-generic
                       └ kernel version: #140-Ubuntu SMP Wed Dec 18 17:59:53 UTC 2024
 2025-04-29 23:19:18 INFO  No artifacts needed for the selected driver. 
+{"level":"INFO","msg":"Resolving dependencies ...","timestamp":"2025-04-29 23:19:19"}
+{"level":"INFO","msg":"Installing artifacts","refs":["ghcr.io/falcosecurity/rules/falco-rules:3"],"timestamp":"2025-04-29 23:19:20"}
+{"level":"INFO","msg":"Preparing to pull artifact","ref":"ghcr.io/falcosecurity/rules/falco-rules:3","timestamp":"2025-04-29 23:19:20"}
+{"level":"INFO","msg":"Pulling layer 8da145602705","timestamp":"2025-04-29 23:19:20"}
+{"level":"INFO","msg":"Pulling layer b3990bf0209c","timestamp":"2025-04-29 23:19:21"}
+{"level":"INFO","msg":"Pulling layer de2cd036fd7f","timestamp":"2025-04-29 23:19:21"}
+{"digest":"ghcr.io/falcosecurity/rules/falco-rules@sha256:de2cd036fd7f9bb87de5d62b36d0f35ff4fa8afbeb9a41aa9624e5f6f9a004e1","level":"INFO","msg":"Verifying signature for artifact","timestamp":"2025-04-29 23:19:21"}
+{"level":"INFO","msg":"Signature successfully verified!","timestamp":"2025-04-29 23:19:22"}
+{"file":"falco_rules.yaml.tar.gz","level":"INFO","msg":"Extracting and installing artifact","timestamp":"2025-04-29 23:19:22","type":"rulesfile"}
+{"digest":"sha256:de2cd036fd7f9bb87de5d62b36d0f35ff4fa8afbeb9a41aa9624e5f6f9a004e1","directory":"/rulesfiles","level":"INFO","msg":"Artifact successfully installed","name":"ghcr.io/falcosecurity/rules/falco-rules:3","timestamp":"2025-04-29 23:19:22","type":"rulesfile"}
