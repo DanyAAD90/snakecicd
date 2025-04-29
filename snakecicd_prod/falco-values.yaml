@@ -1,0 +1,27 @@
+falco:
+  jsonOutput: true
+  logLevel: info
+  grpc:
+    enabled: false
+  falcosidekick:
+    enabled: true
+    host: falco-sidekick.default.svc.cluster.local
+    port: 2801
+
+falcosidekick:
+  enabled: true
+  fullfqdn: false
+  config:
+    prometheus:
+      enabled: true
+      endpoint: "0.0.0.0:2802"
+  service:
+    metricsPort: 2802
+  replicaCount: 1
+
+rbac:
+  create: true
+
+serviceAccount:
+  create: true
+
