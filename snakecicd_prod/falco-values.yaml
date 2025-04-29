@@ -1,6 +1,6 @@
 falco:
   jsonOutput: true
-  logLevel: info
+  logLevel: debug
   httpOutput:
     enabled: true
     url: "http://falco-falcosidekick.default.svc.cluster.local:2801"
