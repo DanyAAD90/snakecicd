@@ -4,7 +4,7 @@ metadata:
   name: falco-sidekick
   namespace: default
   labels:
-    release: prometheus-kube-prometheus
+    release: prometheus
 spec:
   selector:
     matchLabels:
