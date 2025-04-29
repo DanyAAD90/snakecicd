@@ -17,7 +17,7 @@ falcosidekick:
       enabled: true
       endpoint: "0.0.0.0:2802"
     customfields:
-      output: "prometheus"
+      output: prometheus
 
   service:
     type: ClusterIP
