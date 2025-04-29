@@ -4,7 +4,7 @@ falco:
 
   httpOutput:
     enabled: true
-    url: "http://falco-falcosidekick.default.svc.cluster.local:2801"
+    url: "http://falco-falcosidekick:2801"
 
   grpc:
     enabled: false
