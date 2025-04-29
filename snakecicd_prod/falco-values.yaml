@@ -1,15 +1,13 @@
 falco:
   jsonOutput: true
   logLevel: info
-  grpc:
-    enabled: false
-  falcosidekick:
-    enabled: true
-    host: falco-sidekick.default.svc.cluster.local
-    port: 2801
+
   httpOutput:
     enabled: true
     url: "http://falco-falcosidekick.default.svc.cluster.local:2801"
+
+  grpc:
+    enabled: false
 
 falcosidekick:
   enabled: true
@@ -20,6 +18,10 @@ falcosidekick:
       endpoint: "0.0.0.0:2802"
   service:
     metricsPort: 2802
+    ports:
+      - name: http-metrics
+        port: 2802
+        targetPort: 2802
   replicaCount: 1
 
 rbac:
