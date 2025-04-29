@@ -7,6 +7,9 @@ falco:
     enabled: true
     host: falco-sidekick.default.svc.cluster.local
     port: 2801
+  httpOutput:
+    enabled: true
+    url: "http://falco-falcosidekick.default.svc.cluster.local:2801"
 
 falcosidekick:
   enabled: true
