@@ -12,20 +12,26 @@ falco:
 falcosidekick:
   enabled: true
   fullfqdn: false
+  replicaCount: 1
+
   config:
     prometheus:
       enabled: true
       endpoint: "0.0.0.0:2802"
-  env:
-    - name: PROMETHEUS
-      value: "true"
+
   service:
-    metricsPort: 2802
+    type: ClusterIP
     ports:
+      - name: http
+        port: 2801
+        targetPort: 2801
       - name: http-metrics
         port: 2802
         targetPort: 2802
-  replicaCount: 1
+
+  env:
+    - name: PROMETHEUS
+      value: "true"
 
 rbac:
   create: true
