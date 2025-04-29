@@ -2,8 +2,8 @@ falco:
   jsonOutput: true
   logLevel: debug
   httpOutput:
-    enabled: true
-    url: "http://falco-falcosidekick.default.svc.cluster.local:2801"
+    enabled: false
+#    url: "http://falco-falcosidekick.default.svc.cluster.local:2801"
   grpc:
     enabled: false
   customFields:
