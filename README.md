@@ -60,6 +60,9 @@ Poszczególne elementy, z których zbudowana jest infrastruktura:
 | PV | pvc-... | dynamicznie utworzony PV oraz przypisany do PVC przez local-path StorageClass |
 | NetworkPolicy | snakecicd-network-policy | ochrona komunikacji aplikacji, ogranicza ruch sieciowy dla gry snake w obrębie namespace |
 | HorizontalPodAutoscaler | snakecicd-hpa | dostosowuje ilość podów zależnie od obciążenia cpu na pod, od 2 do 5 |
+| DaemonSet | prometheus | po jednym pod na każdym nodes oraz master, monitoruje zasoby oraz obciążenia |
+| StatefulSet | prometheus | Zbiera, zapisuje, agreguje dane metryczne z calego klastra |
+| StatefulSet | alertmanager | Przechowuje stan alertów, powiadomień, silence | 
 
 Dzialanie poszczególnych komponentów:
 | Komponent | Nazwa | Funkcja |
