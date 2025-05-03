@@ -195,6 +195,19 @@
 
             this.eat = function(food) {
                 let head = this.snakeArray[this.snakeArray.length - 1];
+
+                if (score >= 660) {
+                    // Duża kulka 2x2 – sprawdzamy wszystkie jej rogi
+                    if (
+                        (head.x === food.x && head.y === food.y) ||
+                        (head.x === food.x + 1 && head.y === food.y) ||
+                        (head.x === food.x && head.y === food.y + 1) ||
+                        (head.x === food.x + 1 && head.y === food.y + 1)
+                    ) {
+                        this.length++;
+                        return true;
+                    }
+                } else {
                 if (head.x === food.x && head.y === food.y) {
                     this.length++;
                     return true;
@@ -259,6 +272,12 @@
         window.addEventListener("keydown", function(event) {
             snake.changeDirection(event);
         });
+    
+    <!-- 🎵 Muzyka w tle -->
+    <audio id="bg-music" autoplay loop>
+        <source src="soundtrack.mp3" type="audio/mpeg">
+    </audio>
+    
     </script>
 </body>
 </html>
