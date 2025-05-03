@@ -277,7 +277,20 @@
         window.addEventListener("keydown", function(event) {
             snake.changeDirection(event);
         });
-    
+
+        // odblokowanie dzwieku
+            document.addEventListener("click", () => {
+        const bite = document.getElementById("bite-sound");
+        if (bite) {
+            bite.play().catch(() => {}); // próbujemy odblokować
+        }
+
+        const music = document.getElementById("bg-music");
+        if (music && music.paused) {
+            music.play().catch(() => {});
+        }
+    }, { once: true }); // tylko raz, po pierwszym kliknięciu
+
     </script>
 
 <!-- 🎵 Muzyka w tle -->
