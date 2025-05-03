@@ -217,7 +217,6 @@
                     this.length++;
                     return true;
                 }
-                return false;
             };
 
             this.checkCollision = function() {
@@ -262,7 +261,7 @@
                 } else {
                     ctx.fillStyle = "red";
                     ctx.fillRect(this.x * scale, this.y * scale, scale, scale);
-                };
+                }
             }
         }
         function displayScore() {
