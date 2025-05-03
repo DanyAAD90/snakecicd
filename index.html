@@ -217,7 +217,9 @@
                     this.length++;
                     return true;
                 }
-            };
+            }
+
+            return false;
 
             this.checkCollision = function() {
                 let head = this.snakeArray[this.snakeArray.length - 1];
