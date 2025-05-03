@@ -74,6 +74,11 @@
                 food.randomize();
                 score += 10; // Dodaj 10 punktów
 
+                // 🎵 Efekt dźwiękowy gryzienia
+                const bite = document.getElementById("bite-sound");
+                bite.currentTime = 0;  // resetuje dźwięk
+                bite.play();
+
                 if (score === 660) {
                     showMessage = true;
                     clearTimeout(messageTimer);
@@ -273,11 +278,16 @@
             snake.changeDirection(event);
         });
     
-    <!-- 🎵 Muzyka w tle -->
-    <audio id="bg-music" autoplay loop>
-        <source src="soundtrack.mp3" type="audio/mpeg">
-    </audio>
-    
     </script>
+
+<!-- 🎵 Muzyka w tle -->
+<audio id="bg-music" autoplay loop>
+    <source src="soundtrack.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="bite-sound" preload="auto">
+    <source src="bite.mp3" type="audio/mpeg">
+</audio>
+
 </body>
 </html>
