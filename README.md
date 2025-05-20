@@ -87,4 +87,5 @@ G --> H[Sidecar copy new records data to pv on path /data/high_scores.txt, auto 
 H --> I[High Scores are up-to-date and saved on pv attach in pod]
 I --> J[Monitor infrastructure on ArgoCD]
 ```
-
+## Licencja
+Kod objęty licencją MIT – [zobacz szczegóły](./LICENSE)
