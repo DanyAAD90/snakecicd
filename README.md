@@ -98,4 +98,3 @@ I --> J[Monitor infrastructure on ArgoCD]
 
 ## License
 Code is licensed under the MIT License – [see details](./LICENSE)
->>>>>>> 93f426c (Updated file: /home/tms_master_1/snake/README.md)
