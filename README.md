@@ -1,5 +1,5 @@
 # Project Assumptions for the Snake Game based on CI/CD:
-
+kkkkkkkkkkkkk
 - The repository is located in the `snake/` folder, containing files and `docker-compose` for creating Jenkins in a container and `index.html` with the Snake game.
 - Any change in `index.html` or any file in the local repository triggers an automatic commit and push to GitHub using the `auto_commit.service` configured in `systemd`.
 
