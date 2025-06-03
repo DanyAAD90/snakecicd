@@ -1,19 +1,25 @@
-# Zalozenia projektu gry snake w oparciu o CICD:
-- Repozytorium w folderze snake/ z plikami oraz docker-compose to utworzenia jenkins w kontenerze oraz index.html z gra snake
-- Kazda zmiana w kodzie index.html lub w jakakolwiek w repozytorium lokalnym powoduje automatyczny commit oraz pushowanie do github na podstawie dodanego serwisu auto_commit.service w systemd
-## Continous Integration + Continous Delivery na dockerhub jenkins pipeline:
-  - kopiuje repo z github do swojej przestrzeni kontenera jenkins w /var/jenkins_home/workspace/snake_pipeline/
-  - testuje kod index.html -> jesli blad składni to zatrzymuje proces
-  - tworzy obraz docker np do wersji 15
-  - pushuje nowa wersje na dockerhub (Continous Delivery)
-  - sprawdza czy jest polaczenie curl
-  - uruchamia aplikacje snake na stagingu pod adresem 192.168.18.165:8321
-  - zapisuje logi
-## Realizacja calkowitej automatyzacji Continous Delivery na kubernetes:
-  - monitor_repo.service uruchamia monitor_repo.sh w snakecicd_monitor/ i sprawdza czy nastapila zmiana w kodzie gry (index.html) w lokalnym repozytorium, jeśli tak to wykonaj pipeline za pomoca Jenkins CLI
-  - monitor.service uruchamia monitor.sh w snakecicd_monitor/ i sprawdza zmianę wersji dostarczoną przez jenkins w pliku latest_version na maszynie lokalnej, która pojawi się po wykonaniu pipeline. Jeśli tak, to aktualizuje wartość w pliku values.yaml na podstawie której automatycznie aktualizowany jest obraz image w deploymencie snakecicd-prod na kubernetes
-  - aplikacja jest up-to-date na produkcji w srodowisku kubernetes z deploymentem, servisem oraz dwoma replikami podów pod adresem http://192.168.18.165:8321 (Continous Delivery)
-  ## Workflow procesu aktualizacji github, dockerhub and deployment kubernetes po zmianie kodu gry Snake:
+# Project Assumptions for the Snake Game based on CI/CD:
+
+- The repository is located in the `snake/` folder, containing files and `docker-compose` for creating Jenkins in a container and `index.html` with the Snake game.
+- Any change in `index.html` or any file in the local repository triggers an automatic commit and push to GitHub using the `auto_commit.service` configured in `systemd`.
+
+## Continuous Integration + Continuous Delivery on DockerHub via Jenkins Pipeline:
+
+- Clones the repository from GitHub into Jenkins container workspace at `/var/jenkins_home/workspace/snake_pipeline/`
+- Tests the `index.html` code – if there's a syntax error, the process stops.
+- Builds a Docker image, e.g., version 15.
+- Pushes the new version to DockerHub (Continuous Delivery).
+- Verifies curl connection.
+- Launches the Snake application on staging at `192.168.18.165:8321`.
+- Logs are saved.
+
+## Full Continuous Delivery Automation on Kubernetes:
+
+- `monitor_repo.service` launches `monitor_repo.sh` in `snakecicd_monitor/` to detect changes in the game code (`index.html`) in the local repo. If detected, triggers the pipeline using Jenkins CLI.
+- `monitor.service` launches `monitor.sh` in `snakecicd_monitor/`, checks for version changes delivered by Jenkins in the `latest_version` file on the local machine (after pipeline execution). If changed, it updates the value in `values.yaml`, which automatically updates the image in the `snakecicd-prod` deployment on Kubernetes.
+- The application is up-to-date in the production Kubernetes environment with deployment, service, and two pod replicas at `http://192.168.18.165:8321` (Continuous Delivery).
+
+## Workflow of Updating GitHub, DockerHub, and Kubernetes Deployment after Snake Code Change:
 
 ```mermaid
 flowchart TD
@@ -48,33 +54,35 @@ P --> R
 K --> D
 ```
 
-## Architektura Klastra K8s dla Snake game ##
+## K8s Cluster Architecture for Snake Game ##
 
-Poszczególne elementy, z których zbudowana jest infrastruktura:
-| Typ | Nazwa | Działanie |
-|-----|-------|-----------|
+Infrastructure components:
+
+| Type | Name | Description |
+|------|------|-------------|
 | Namespace | snakecicd-prod | - |
-| Deployment | snakecicd-prod | zawiera InitContainer, App oraz Sidecar Container, obsługuje uruchomienie aplikacji Snake, kopiowanie plików high_scores.txt oraz ich synchronizację |
-| ConfigMap | high-scores-cm | klucz high_scores z wpisami rekordów gry, Przechowuje treść pliku high_scores.txt jako dane konfiguracyjne |
-| PVC | snakecicd-storage | dynamiczny prosioning za pomoca local-path, trwałe miejsce na zapis rekordów gry Snake w /data |
-| PV | pvc-... | dynamicznie utworzony PV oraz przypisany do PVC przez local-path StorageClass |
-| NetworkPolicy | snakecicd-network-policy | ochrona komunikacji aplikacji, ogranicza ruch sieciowy dla gry snake w obrębie namespace |
-| HorizontalPodAutoscaler | snakecicd-hpa | dostosowuje ilość podów zależnie od obciążenia cpu na pod, od 2 do 5 |
-| DaemonSet | prometheus | po jednym pod na każdym nodes oraz master, monitoruje zasoby oraz obciążenia |
-| StatefulSet | prometheus | Zbiera, zapisuje, agreguje dane metryczne z calego klastra |
-| StatefulSet | alertmanager | Przechowuje stan alertów, powiadomień, silence | 
+| Deployment | snakecicd-prod | Contains InitContainer, App, and Sidecar Container, responsible for launching the Snake app, copying `high_scores.txt` and syncing it |
+| ConfigMap | high-scores-cm | Contains the `high_scores` key with game record entries; stores `high_scores.txt` content as config |
+| PVC | snakecicd-storage | Dynamic provisioning via `local-path`, persistent storage for game scores in `/data` |
+| PV | pvc-... | Dynamically created and bound to PVC via `local-path` StorageClass |
+| NetworkPolicy | snakecicd-network-policy | Secures app communication, limits traffic within the namespace |
+| HPA | snakecicd-hpa | Adjusts pod count from 2 to 5 based on CPU usage |
+| DaemonSet | prometheus | One pod per node and master, monitors resources and usage |
+| StatefulSet | prometheus | Collects, stores, and aggregates metrics from the whole cluster |
+| StatefulSet | alertmanager | Stores alerts, notifications, silences |
 
-Dzialanie poszczególnych komponentów:
-| Komponent | Nazwa | Funkcja |
-|-----------|-------|---------|
-| InitContainer | init-copy-highscore | Kopiuje zawartość /config/high_scores.txt (ConfigMap) do /data/high_scores.txt (PVC) przy starcie Poda |
-| Główny kontener | snakecicd-prod | Uruchamia grę Snake, dostęp przez serwis TCP:8321 |
-| Sidecar | highscore-sync | Co 10 sekund kopiuje zawartość /config/high_scores.txt do /data/high_scores.txt, aktualizując plik na PV |
-| ConfigMap | high-scores-cm | Zawiera wyniki graczy w formie pliku tekstowego |
-| PVC | snakecicd-storage | Zapewnia trwałe przechowywanie danych gry (wyników high_scores) |
-| Helm Chart | - | Definiuje wszystkie zasoby Kubernetes, automatycznie zarządza rolloutem przy zmianach w ConfigMap |
+Component functionalities:
 
-## Workflow zmiany pliku values.yaml z rekordami graczy ##
+| Component | Name | Function |
+|-----------|------|----------|
+| InitContainer | init-copy-highscore | Copies `/config/high_scores.txt` (from ConfigMap) to `/data/high_scores.txt` (PVC) at Pod startup |
+| Main container | snakecicd-prod | Runs the Snake game, available at TCP:8321 |
+| Sidecar | highscore-sync | Every 10s copies `/config/high_scores.txt` to `/data/high_scores.txt`, updating PV |
+| ConfigMap | high-scores-cm | Stores player scores in a text file format |
+| PVC | snakecicd-storage | Provides persistent storage for game scores |
+| Helm Chart | - | Defines all Kubernetes resources, manages automatic rollout on ConfigMap changes |
+
+## Workflow for Updating Player Scores via values.yaml ##
 
 ```mermaid
 flowchart TD
@@ -87,5 +95,11 @@ G --> H[Sidecar copy new records data to pv on path /data/high_scores.txt, auto 
 H --> I[High Scores are up-to-date and saved on pv attach in pod]
 I --> J[Monitor infrastructure on ArgoCD]
 ```
+<<<<<<< HEAD
 ## Licencja
 Kod objęty licencją MIT – [zobacz szczegóły](./LICENSE)
+=======
+
+## License
+Code is licensed under the MIT License – [see details](./LICENSE)
+>>>>>>> 93f426c (Updated file: /home/tms_master_1/snake/README.md)
